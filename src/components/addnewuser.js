@@ -1,19 +1,18 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import UserInformation from "./UserInformation";
 
-export const AddNewUser = () => {
-  const [age, setAge] = useState(null);
+export const AddNewUser = ({ onAddUser }) => {
+  const [age, setAge] = useState("");
   const [newName, setName] = useState("");
 
-  const doSomething = (d) => {
-    setName(d.target.value);
-  };
-
-  const foo = () => {
+  const submitForm = () => {
     if (age < 18) {
       alert("You are not old enough to be our employee");
     } else {
-      window.submitForm(newName);
+      alert("Submiting form for " + newName);
+      onAddUser(newName);
+      setAge("");
+      setName("");
     }
   };
 
@@ -21,13 +20,19 @@ export const AddNewUser = () => {
 
   return (
     <div style={{ background: "#2ab92a", padding: 20 }}>
-      <input type="text" onChange={doSomething} placeholder="Type your name" />
+      <input
+        value={newName}
+        type="text"
+        onChange={(event) => setName(event.target.value)}
+        placeholder="Type your name"
+      />
       <input
         type="number"
-        onChange={(d) => setAge(d.target.value)}
+        onChange={(event) => setAge(event.target.value)}
+        value={age}
         placeholder="Type your age"
       />
-      <button onClick={foo}>Submit form</button>
+      <button onClick={submitForm}>Submit form</button>
       <UserInformation data={userData} />
     </div>
   );
