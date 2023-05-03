@@ -1,22 +1,7 @@
-import { useEffect, useState, memo } from "react";
+import { memo } from "react";
 
-export default () => {
-  const [users, setUsers] = useState([]);
-
-  window.submitForm = (name) => {
-    alert("Submiting form for " + name);
-    users[users.length - 1].name += " (*)"; // mark the previous employee
-    users.push({ name: name });
-    setUsers(users);
-  };
-
-  useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/users").then((foo) => {
-      foo.json().then((bar) => {
-        setUsers(bar);
-      });
-    });
-  }, []);
+export default ({ users }) => {
+  window.submitForm = (name) => {};
 
   if (users.length === 0) return <></>;
 
@@ -27,7 +12,7 @@ export default () => {
       </h4>
       <div>
         {users.map((d, index) => (
-          <Name data={d} />
+          <Name data={d} key={index} />
         ))}
       </div>
     </div>
